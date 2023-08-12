@@ -1,3 +1,6 @@
-export const PostDetailPage = () => {
-  return <div>PostDetailPage</div>;
+import { PostContent } from "../../components/posts/post-detail/post-content";
+
+const PostDetailPage = () => {
+  return <PostContent />;
 };
+export default PostDetailPage;

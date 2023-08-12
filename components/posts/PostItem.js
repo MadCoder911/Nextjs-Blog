@@ -8,7 +8,7 @@ const PostItem = ({ title, image, excerpt, date, slug }) => {
     year: "numeric",
   });
   const imagePath = `/images/posts/${slug}/${image}`;
-  console.log(imagePath);
+
   return (
     <li className={styles.post}>
       <Link href={`/posts/${slug}`}>
