@@ -1,8 +1,17 @@
 import { getPageFiles } from "next/dist/server/get-page-files";
 import { PostContent } from "../../components/posts/post-detail/post-content";
 import { getPostsData, getPostsFiles } from "../../lib/posts-util";
+import Head from "next/head";
 const PostDetailPage = ({ post }) => {
-  return <PostContent post={post} />;
+  return (
+    <>
+      <Head>
+        <title>{post.title}</title>
+        <meta name="description" content={post.excerpt} />
+      </Head>
+      <PostContent post={post} />;
+    </>
+  );
 };
 
 export const getStaticProps = (context) => {

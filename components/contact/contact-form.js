@@ -37,6 +37,9 @@ const ContactForm = () => {
         name: enteredName,
         message: enteredMessage,
       });
+      setEnteredEmail("");
+      setEnteredMessage("");
+      setEnteredName("");
     } catch (error) {
       toast("Could't connect to the database", {
         autoClose: 2000,
