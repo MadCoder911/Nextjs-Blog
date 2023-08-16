@@ -1,23 +1,58 @@
 import { useState } from "react";
 import styles from "./contact-form.module.css";
+import { toast } from "react-toastify";
+//
+async function sendContactData(contactDetails) {
+  const response = await fetch("/api/contact", {
+    method: "POST",
+    body: JSON.stringify(contactDetails),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw new Error(data.message || "Something went wrong!");
+  }
+}
+//
+//
 const ContactForm = () => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [enteredName, setEnteredName] = useState("");
   const [enteredMessage, setEnteredMessage] = useState("");
   const [requestStatus, setRequestStatus] = useState(); // 'pending', 'success', 'error'
   const [requestError, setRequestError] = useState();
-  const sendMessageHandler = (e) => {
+  const sendMessageHandler = async (e) => {
     e.preventDefault();
-    fetch('/api/contact', {
-        method: "POST",
-        body: 
-    })
+    toast("Sending Your Message", {
+      autoClose: 400,
+      type: "info",
+    });
+    try {
+      await sendContactData({
+        email: enteredEmail,
+        name: enteredName,
+        message: enteredMessage,
+      });
+    } catch (error) {
+      toast("Could't connect to the database", {
+        autoClose: 2000,
+        type: "error",
+      });
+      return;
+    }
+    toast("Message Sent", {
+      autoClose: 2000,
+      type: "success",
+    });
   };
   return (
     <section className={styles.contact}>
       <h1>How can I help you?</h1>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={sendMessageHandler}>
         <div className={styles.controls}>
           <div className={styles.control}>
             <label htmlFor="email">Your Email</label>
